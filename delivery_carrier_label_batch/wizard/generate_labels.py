@@ -62,6 +62,8 @@ class DeliveryCarrierLabelGenerate(models.TransientModel):
     @contextmanager
     @api.model
     def _do_in_new_env(self):
+        # Be careful with the test_enable flag, as this behavior won't be the same on tests.
+        # If in test mode, there won't be any concurrent threading.
         if tools.config["test_enable"]:
             yield self.env
             return
