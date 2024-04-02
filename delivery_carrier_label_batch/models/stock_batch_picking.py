@@ -1,6 +1,8 @@
 # Copyright 2013-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
-from odoo import _, api, fields, models
+from contextlib import contextmanager
+
+from odoo import _, api, fields, models, registry, tools
 
 
 class StockBatchPicking(models.Model):
@@ -35,6 +37,19 @@ class StockBatchPicking(models.Model):
         carrier = carrier or self.carrier_id
         options = carrier.available_option_ids
         return options.filtered(lambda rec: rec.mandatory or rec.by_default)
+
+    @contextmanager
+    @api.model
+    def _do_in_new_env(self):
+        # Be careful with the test_enable flag, as this behavior won't be the same on tests.
+        # If in test mode, there won't be any concurrent threading.
+        if tools.config["test_enable"]:
+            yield self.env
+            return
+
+        with api.Environment.manage():
+            with registry(self.env.cr.dbname).cursor() as new_cr:
+                yield api.Environment(new_cr, self.env.uid, self.env.context)
 
     @api.onchange("carrier_id")
     def carrier_id_change(self):
@@ -107,16 +122,23 @@ class StockBatchPicking(models.Model):
 
     def purge_tracking_references(self):
         """Purge tracking for each picking and destination package"""
-        for batch in self:
-            move_lines = batch.move_line_ids
-            packs = move_lines.result_package_id.filtered(lambda p: p.parcel_tracking)
-            if packs:
-                packs.write({"parcel_tracking": False})
-            pickings = self.env["stock.picking"].search(
-                [
-                    ("move_line_ids", "in", move_lines.ids),
-                    ("carrier_tracking_ref", "!=", False),
-                ]
-            )
-            if pickings:
-                pickings.write({"carrier_tracking_ref": False})
+        with self._do_in_new_env() as new_env:
+            # labels = new_env['shipping.label']
+            new_self = self.with_env(new_env)
+            for batch in new_self:
+                move_lines = batch.move_line_ids
+                packs = move_lines.result_package_id.filtered(
+                    lambda p: p.parcel_tracking
+                )
+                if packs:
+                    packs.write({"parcel_tracking": False})
+                pickings = new_self.env["stock.picking"].search(
+                    [
+                        ("move_line_ids", "in", move_lines.ids),
+                        ("carrier_tracking_ref", "!=", False),
+                    ]
+                )
+                if pickings:
+                    pickings.write({"carrier_tracking_ref": False})
+            # may not be necessary but we leave it here for now
+            new_self.env.cr.commit()
