@@ -72,16 +72,12 @@ class SaleOrder(models.Model):
 
     # End migration note
 
-    def _get_param_auto_add_delivery_line(self):
+    def _is_auto_add_delivery_line(self):
         # When we have the context 'website_id' it means that we are doing the order from
         # e-commerce. So we don't want to add the delivery line automatically.
         if self.env.context.get("website_id"):
             return False
-        return (
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("delivery_auto_refresh.auto_add_delivery_line")
-        )
+        return self.company_id.sale_auto_add_delivery_line
 
     def _get_delivery_discount(self, delivery_lines):
         return delivery_lines[-1:].discount
@@ -122,7 +118,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if self.env.context.get("auto_refresh_delivery"):
             return
-        if not self._get_param_auto_add_delivery_line():
+        if not self._is_auto_add_delivery_line():
             return
         if self.state not in ("draft", "sent"):
             return
@@ -178,7 +174,7 @@ class SaleOrder(models.Model):
         return res
 
     def set_delivery_line(self, carrier, amount):
-        if self._get_param_auto_add_delivery_line() and self.state in ("draft", "sent"):
+        if self._is_auto_add_delivery_line() and self.state in ("draft", "sent"):
             # This will trigger an _auto_refresh_delivery in write
             self.carrier_id = carrier.id
         else:
@@ -188,6 +184,10 @@ class SaleOrder(models.Model):
         """If the picking is returned before being invoiced, like when the picking
         is delivered but immediately return because the customer refused the order,
         so no delivery charges should be applied."""
+        self.ensure_one()
+        if not self.company_id.sale_auto_void_delivery_line:
+            return False
+
         # There are invoiceable lines so there's no full return or the lines
         # were not set to refund.
         qty_delivered = sum(
