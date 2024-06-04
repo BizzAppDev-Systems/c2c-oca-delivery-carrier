@@ -90,9 +90,6 @@ class DeliveryRoulierCase(TransactionCase):
         )._apply_inventory()
         self.order.action_confirm()
         self.picking = self.order.picking_ids
-        self.env["stock.immediate.transfer"].create(
-            {"pick_ids": [(6, 0, self.picking.ids)]}
-        ).process()
 
     @classmethod
     def tearDownClass(cls):
@@ -111,6 +108,7 @@ class DeliveryRoulierCase(TransactionCase):
             self.assertEqual("get_label", roulier_args[1])
             roulier_payload = roulier_args[2]
             self.assertEqual(len(roulier_payload["parcels"]), 1)
+            # TODO: understand where ``weight`` is changed
             self.assertEqual(roulier_payload["parcels"][0].get("weight"), 1.2)
             self.assertEqual(
                 roulier_payload["to_address"].get("street1"), "test street"
