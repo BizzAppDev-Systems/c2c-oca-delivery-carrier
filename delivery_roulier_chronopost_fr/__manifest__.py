@@ -2,7 +2,7 @@
 
 {
     "name": "Delivery Chronopost France",
-    "version": "14.0.1.0.1",
+    "version": "17.0.1.0.1",
     "author": "Akretion,Odoo Community Association (OCA)",
     "category": "Delivery",
     "complexity": "normal",
@@ -15,6 +15,11 @@
         "data/product.xml",
         "data/delivery.xml",
     ],
+    "external_dependencies": {
+        "python": [
+            "pytest-recording",
+        ],
+    },
     "installable": True,
     "license": "AGPL-3",
 }

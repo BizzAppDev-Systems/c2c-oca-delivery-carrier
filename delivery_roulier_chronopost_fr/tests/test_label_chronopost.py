@@ -1,11 +1,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from vcr_unittest import VCRMixin
+import pytest
 
 from odoo.addons.base_delivery_carrier_label.tests import carrier_label_case
 
 
-class ChronopostLabelCase(VCRMixin, carrier_label_case.CarrierLabelCase):
+class ChronopostLabelCase(carrier_label_case.CarrierLabelCase):
     def setUp(self, *args, **kwargs):
         # need it to be defined before super to avoid failure in _hide_sensitive_data
         self.account = False
@@ -25,6 +25,7 @@ class ChronopostLabelCase(VCRMixin, carrier_label_case.CarrierLabelCase):
             }
         )
 
+    @classmethod
     def _hide_sensitive_data(self, request):
         password = self.account and self.account.password or "dummy"
         account = self.account and self.account.account or "dummy"
@@ -34,8 +35,12 @@ class ChronopostLabelCase(VCRMixin, carrier_label_case.CarrierLabelCase):
         request.body = body
         return request
 
-    def _get_vcr_kwargs(self, **kwargs):
+    @classmethod
+    @pytest.fixture(scope="module")
+    def vcr_config(self):
         return {
+            "filter_headers": ["authorization"],
+            "ignore_localhost": True,
             "record_mode": "once",
             "match_on": ["method", "path"],
             "decode_compressed_response": True,
