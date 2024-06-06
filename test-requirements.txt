@@ -1,2 +1,4 @@
 odoo-addon-base_delivery_carrier_label @ git+https://github.com/OCA/delivery-carrier.git@refs/pull/828/head#subdirectory=base_delivery_carrier_label
 odoo-addon-delivery_carrier_account @ git+https://github.com/OCA/delivery-carrier.git@refs/pull/827/head#subdirectory=delivery_carrier_account
+odoo-addon-delivery_roulier @ git+https://github.com/OCA/delivery-carrier.git@refs/pull/826/head#subdirectory=delivery_roulier
+odoo-addon-delivery_roulier_option @ git+https://github.com/OCA/delivery-carrier.git@refs/pull/829/head#subdirectory=delivery_roulier_option
