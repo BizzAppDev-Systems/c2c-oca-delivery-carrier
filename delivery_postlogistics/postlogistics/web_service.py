@@ -450,7 +450,22 @@ class PostlogisticsWebService(object):
             },
             timeout=60,
         )
-        return response.json()
+
+        response.raise_for_status()
+
+        try:
+            json_response = response.json()
+            response.raise_for_status()
+        except requests.exceptions.JSONDecodeError as exc:
+            raise exceptions.UserError(
+                _("API response without content - no access token received.")
+            ) from exc
+        except requests.exceptions.HTTPError as exc:
+            raise exceptions.UserError(
+                _("Server is not accessible at the moment. Please try again later.")
+            ) from exc
+
+        return json_response
 
     @classmethod
     def get_access_token(cls, picking_carrier):
