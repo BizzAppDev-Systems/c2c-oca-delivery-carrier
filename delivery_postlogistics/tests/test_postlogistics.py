@@ -4,6 +4,8 @@ from os.path import dirname, join
 
 from vcr import VCR
 
+from odoo.exceptions import UserError
+
 from .common import TestPostlogisticsCommon
 
 recorder = VCR(
@@ -108,3 +110,9 @@ class TestPostlogistics(TestPostlogisticsCommon):
             res = self.carrier.postlogistics_rate_shipment(None)
             self.assertEqual(len(cassette.requests), 2)
         self.assertEqual(res["price"], 1.0)
+
+    def test_postlogistics_get_token_error(self):
+        with recorder.use_cassette("test_token_error") as cassette:
+            with self.assertRaises(UserError):
+                self.service_class._request_access_token(self.carrier)
+                self.assertEqual(len(cassette.requests), 1)

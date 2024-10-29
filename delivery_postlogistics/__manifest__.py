@@ -10,6 +10,7 @@
     "category": "Delivery",
     "complexity": "normal",
     "depends": ["delivery", "mail", "base", "stock"],
+    "external_dependencies": {"python": ["requests==2.27.0"]},
     "website": "https://github.com/OCA/delivery-carrier",
     "data": [
         "security/ir.model.access.csv",
