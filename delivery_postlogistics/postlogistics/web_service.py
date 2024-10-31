@@ -14,6 +14,7 @@ import requests
 from PIL import Image
 
 from odoo import _, exceptions
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -450,7 +451,22 @@ class PostlogisticsWebService(object):
             },
             timeout=60,
         )
-        return response.json()
+
+        try:
+            response.raise_for_status()
+            json_response = response.json()
+        except (
+            requests.exceptions.JSONDecodeError,
+            requests.exceptions.HTTPError,
+        ) as error:
+            raise UserError(
+                _(
+                    "Postlogistics service is not accessible at the moment. "
+                    "Please try again later."
+                )
+            ) from error
+
+        return json_response
 
     @classmethod
     def get_access_token(cls, picking_carrier):
