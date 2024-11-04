@@ -462,8 +462,8 @@ class PostlogisticsWebService(object):
         ) as error:
             raise UserError(
                 _(
-                    "Postlogistics service is not accessible at the moment. "
-                    "Please try again later."
+                    "Postlogistics service is not accessible at the moment. Error code: %s. "
+                    "Please try again later." % (response.status_code or "None")
                 )
             ) from error
 
