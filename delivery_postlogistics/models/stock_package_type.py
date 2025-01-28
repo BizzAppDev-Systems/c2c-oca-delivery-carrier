@@ -1,4 +1,4 @@
-# Copyright 2013-2016 Camptocamp SA
+# Copyright 2013 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
@@ -8,10 +8,11 @@ class PackageType(models.Model):
     _inherit = "stock.package.type"
 
     package_carrier_type = fields.Selection(
-        selection_add=[("postlogistics", "PostLogistics")]
+        selection_add=[("postlogistics", "PostLogistics")],
+        ondelete={"postlogistics": "set default"},
     )
 
-    def _get_packaging_codes(self):
+    def _get_shipper_package_code_list(self):
         """
         Return the list of packaging codes
         """

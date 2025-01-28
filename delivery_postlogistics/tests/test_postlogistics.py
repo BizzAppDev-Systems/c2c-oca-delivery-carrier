@@ -1,26 +1,15 @@
 # Copyright 2015-2019 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from os.path import dirname, join
 
-from vcr import VCR
 
 from odoo.exceptions import UserError
+from odoo.tests import common
 
-from .common import TestPostlogisticsCommon
-
-recorder = VCR(
-    record_mode="once",
-    cassette_library_dir=join(dirname(__file__), "fixtures/cassettes"),
-    path_transformer=VCR.ensure_suffix(".yaml"),
-    filter_headers=["Authorization"],
-    filter_post_data_parameters=["client_id", "client_secret"],
-    # ignore scheme, host, port
-    match_on=("method", "path", "query"),
-    # allow to read and edit content in cassettes
-    decode_compressed_response=True,
-)
+from .common import TestPostlogisticsCommon, recorder
 
 
+# This tag removal will allow to call external API URL
+@common.tagged("-standard")
 class TestPostlogistics(TestPostlogisticsCommon):
     @classmethod
     def setUpClass(cls):
@@ -114,9 +103,10 @@ class TestPostlogistics(TestPostlogisticsCommon):
     def test_postlogistics_get_token_error(self):
         with recorder.use_cassette("test_token_error") as cassette:
             err_msg = (
-                "Postlogistics service is not accessible at the moment. Error code: 503. "
+                "Postlogistics service is not accessible at the moment. Error code:"
+                " 503. "
                 "Please try again later."
             )
             with self.assertRaisesRegex(UserError, err_msg):
                 self.service_class._request_access_token(self.carrier)
-                self.assertEqual(len(cassette.requests), 1)
+            self.assertEqual(len(cassette.requests), 1)
