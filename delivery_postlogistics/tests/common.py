@@ -1,9 +1,15 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+from os.path import dirname, join
 
-from odoo.tests.common import TransactionCase
+from vcr import VCR
+from vcr.record_mode import RecordMode
 
-from ..postlogistics.web_service import PostlogisticsWebService
+from odoo.tools.safe_eval import json
+
+from odoo.addons.base.tests.common import BaseCommon
+
+from ..postlogistics.web_service import GENERATE_LABEL_PATH, PostlogisticsWebService
 
 ENDPOINT_URL = "https://wedecint.post.ch/"
 CLIENT_ID = "XXX"
@@ -11,7 +17,39 @@ CLIENT_SECRET = "XXX"
 LICENSE = "XXX"
 
 
-class TestPostlogisticsCommon(TransactionCase):
+recorder = VCR(
+    record_mode=RecordMode.ONCE,
+    cassette_library_dir=join(dirname(__file__), "fixtures/cassettes"),
+    path_transformer=VCR.ensure_suffix(".yaml"),
+    filter_headers=["Authorization"],
+    filter_post_data_parameters=["client_id", "client_secret"],
+    # ignore scheme, host, port
+    match_on=("method", "path", "query"),
+    # allow to read and edit content in cassettes
+    decode_compressed_response=True,
+)
+
+
+def check_generate_label_body(request, saved_request):
+    """
+    Check if the body of the generate label request is the same as the saved
+    one
+    """
+    assert request.path == saved_request.path
+
+    if request.path == GENERATE_LABEL_PATH:
+        query_json = json.loads(request.body.decode("utf-8"))
+        saved_json = json.loads(saved_request.body.decode("utf-8"))
+        query_json["item"]["itemID"] = saved_json["item"]["itemID"]
+        assert (
+            query_json == saved_json
+        ), "Body request not corresponding to the saved one"
+
+
+recorder.register_matcher("generate_label_body", check_generate_label_body)
+
+
+class TestPostlogisticsCommon(BaseCommon):
     @classmethod
     def setUpClassLicense(cls):
         cls.license = cls.env["postlogistics.license"].create(
@@ -21,7 +59,7 @@ class TestPostlogisticsCommon(TransactionCase):
     @classmethod
     def setUpClassCarrier(cls):
         shipping_product = cls.env["product.product"].create({"name": "Shipping"})
-        option_model = cls.env["postlogistics.delivery.carrier.template.option"]
+        option_model = cls.env["delivery.carrier.template.option"]
         partner_id = cls.env.ref("delivery_postlogistics.partner_postlogistics").id
         label_layout = option_model.create({"code": "A6", "partner_id": partner_id})
         output_format = option_model.create({"code": "PDF", "partner_id": partner_id})
@@ -117,7 +155,6 @@ class TestPostlogisticsCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.setUpClassLicense()
         cls.setUpClassCarrier()
         cls.setUpClassPackaging()
