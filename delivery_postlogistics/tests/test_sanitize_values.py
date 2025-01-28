@@ -1,18 +1,20 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
+from odoo.tests import common
 
 from ..postlogistics.web_service import DISALLOWED_CHARS_MAPPING
 from .common import TestPostlogisticsCommon
 
 
+@common.tagged("at_install", "post_install")
 class TestSanitizeValues(TestPostlogisticsCommon):
     """Just create records full of disallowed chars, an test that everyone of them
     is correctly removed, as none of those chars should be sent on postlogistics api.
     """
 
     @classmethod
-    def setUpPartner(cls):
+    def setUpClassPartner(cls):
         cls.partner = cls.env["res.partner"].create(
             {
                 "name": "‘P<o\\t|at>o’",
@@ -29,8 +31,11 @@ class TestSanitizeValues(TestPostlogisticsCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.setUpPartner()
-        cls.picking = cls.create_picking(cls.partner)
+        cls.setUpClassPartner()
+
+    def setUp(self):
+        super().setUp()
+        self.picking = self.create_picking(self.partner)
 
     def check_strings_in_dict(self, values):
         # Do not check other types than strings.
@@ -49,7 +54,7 @@ class TestSanitizeValues(TestPostlogisticsCommon):
         self.check_strings_in_dict(customer)
         recipient = self.service_class._prepare_recipient(self.picking)
         self.check_strings_in_dict(recipient)
-        packages = self.picking._get_packages_from_picking()
+        packages = self.picking._get_quant_packages_from_picking()
         item_list = self.service_class._prepare_item_list(
             self.picking, recipient, packages
         )
