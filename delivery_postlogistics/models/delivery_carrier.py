@@ -1,15 +1,13 @@
-# Copyright 2013-2016 Camptocamp SA
+# Copyright 2013 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 from ..postlogistics.web_service import PostlogisticsWebService
 
 
 class DeliveryCarrier(models.Model):
-    """Add service group"""
-
     _inherit = "delivery.carrier"
 
     delivery_type = fields.Selection(
@@ -51,19 +49,19 @@ class DeliveryCarrier(models.Model):
     )
 
     postlogistics_label_layout = fields.Many2one(
-        comodel_name="postlogistics.delivery.carrier.template.option",
+        comodel_name="delivery.carrier.template.option",
         string="Label layout",
-        domain=[("postlogistics_type", "=", "label_layout")],
+        domain=[("type", "=", "label_layout")],
     )
     postlogistics_output_format = fields.Many2one(
-        comodel_name="postlogistics.delivery.carrier.template.option",
+        comodel_name="delivery.carrier.template.option",
         string="Output format",
-        domain=[("postlogistics_type", "=", "output_format")],
+        domain=[("type", "=", "output_format")],
     )
     postlogistics_resolution = fields.Many2one(
-        comodel_name="postlogistics.delivery.carrier.template.option",
+        comodel_name="delivery.carrier.template.option",
         string="Resolution",
-        domain=[("postlogistics_type", "=", "resolution")],
+        domain=[("type", "=", "resolution")],
     )
     postlogistics_tracking_format = fields.Selection(
         [
@@ -114,11 +112,11 @@ class DeliveryCarrier(models.Model):
     def postlogistics_get_tracking_link(self, picking):
         return (
             "https://service.post.ch/EasyTrack/"
-            "submitParcelData.do?formattedParcelCodes=%s" % picking.carrier_tracking_ref
+            f"submitParcelData.do?formattedParcelCodes={picking.carrier_tracking_ref}"
         )
 
     def postlogistics_cancel_shipment(self, pickings):
-        raise UserError(_("This feature is under development"))
+        raise UserError(self.env._("This feature is under development"))
 
     def postlogistics_rate_shipment(self, order):
         self.ensure_one()
@@ -150,15 +148,15 @@ class DeliveryCarrier(models.Model):
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": _("Validated"),
-                "message": _("The credential is valid."),
+                "title": self.env._("Validated"),
+                "message": self.env._("The credential is valid."),
                 "sticky": False,
             },
         }
         return message
 
     def _compute_can_generate_return(self):
-        res = super(DeliveryCarrier, self)._compute_can_generate_return()
+        res = super()._compute_can_generate_return()
         for carrier in self:
             if carrier.delivery_type == "postlogistics":
                 carrier.can_generate_return = True
