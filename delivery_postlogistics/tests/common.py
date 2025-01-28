@@ -1,17 +1,17 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 from ..postlogistics.web_service import PostlogisticsWebService
 
-ENDPOINT_URL = "https://wedecint.post.ch/"
+ENDPOINT_URL = "https://localhost:8069/"
 CLIENT_ID = "XXX"
 CLIENT_SECRET = "XXX"
 LICENSE = "XXX"
 
 
-class TestPostlogisticsCommon(TransactionCase):
+class TestPostlogisticsCommon(BaseCommon):
     @classmethod
     def setUpClassLicense(cls):
         cls.license = cls.env["postlogistics.license"].create(
@@ -21,7 +21,7 @@ class TestPostlogisticsCommon(TransactionCase):
     @classmethod
     def setUpClassCarrier(cls):
         shipping_product = cls.env["product.product"].create({"name": "Shipping"})
-        option_model = cls.env["postlogistics.delivery.carrier.template.option"]
+        option_model = cls.env["delivery.carrier.template.option"]
         partner_id = cls.env.ref("delivery_postlogistics.partner_postlogistics").id
         label_layout = option_model.create({"code": "A6", "partner_id": partner_id})
         output_format = option_model.create({"code": "PDF", "partner_id": partner_id})
@@ -117,7 +117,6 @@ class TestPostlogisticsCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.setUpClassLicense()
         cls.setUpClassCarrier()
         cls.setUpClassPackaging()
