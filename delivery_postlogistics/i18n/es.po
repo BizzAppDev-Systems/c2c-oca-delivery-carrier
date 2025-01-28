@@ -17,17 +17,17 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_resolution_option_200ppp
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_resolution_option_200ppp
 msgid "200 ppp"
 msgstr "200 ppp"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_resolution_option_300ppp
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_resolution_option_300ppp
 msgid "300 ppp"
 msgstr "300 ppp"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_resolution_option_600ppp
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_resolution_option_600ppp
 msgid "600 ppp"
 msgstr "600 ppp"
 
@@ -233,7 +233,7 @@ msgid "Domicile Post office"
 msgstr "Domicilio Oficina de Correos"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_eps
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_eps
 msgid "EPS"
 msgstr "EPS"
 
@@ -298,22 +298,22 @@ msgid "For notify delivery by telephone (ZAW3213)"
 msgstr "Para notificación de entrega por teléfono (ZAW3213)"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_a5
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_a5
 msgid "Format A5"
 msgstr "Formato A5"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_a6
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_a6
 msgid "Format A6"
 msgstr "Formato A6"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_a7
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_a7
 msgid "Format A7"
 msgstr "Formato A7"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_fe
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_layout_option_fe
 msgid "Format FE"
 msgstr "Formato FE"
 
@@ -323,7 +323,7 @@ msgid "Franking License"
 msgstr "Licencia de franquicia"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_gif
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_gif
 msgid "GIF"
 msgstr "GIF"
 
@@ -378,7 +378,7 @@ msgid "Is public document"
 msgstr "Es un documento público"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_jpg
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_jpg
 msgid "JPG"
 msgstr "JPG"
 
@@ -538,12 +538,12 @@ msgid "Output format not set"
 msgstr "Formato de salida no establecido"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_pdf
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_pdf
 msgid "PDF"
 msgstr "PDF"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_png
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_png
 msgid "PNG"
 msgstr "PNG"
 
@@ -924,7 +924,7 @@ msgid "ZPL Patch String"
 msgstr "Cadena de parches ZPL"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_zpl2
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_zpl2
 msgid "ZPL2"
 msgstr "ZPL2"
 
@@ -955,7 +955,7 @@ msgid "resolution"
 msgstr "resolución"
 
 #. module: delivery_postlogistics
-#: model:postlogistics.delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_spdf
+#: model:delivery.carrier.template.option,name:delivery_postlogistics.postlogistics_output_format_option_spdf
 msgid "sPDF"
 msgstr "sPDF"
 

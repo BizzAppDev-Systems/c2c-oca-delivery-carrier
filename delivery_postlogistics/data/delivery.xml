@@ -3,7 +3,7 @@
     <!-- Label layouts -->
     <record
         id="postlogistics_layout_option_a7"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">Format A7</field>
         <field name="code">A7</field>
@@ -12,7 +12,7 @@
     </record>
     <record
         id="postlogistics_layout_option_a6"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">Format A6</field>
         <field name="code">A6</field>
@@ -21,7 +21,7 @@
     </record>
     <record
         id="postlogistics_layout_option_a5"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">Format A5</field>
         <field name="code">A5</field>
@@ -30,7 +30,7 @@
     </record>
     <record
         id="postlogistics_layout_option_fe"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">Format FE</field>
         <field name="code">FE</field>
@@ -40,7 +40,7 @@
     <!-- Output formats -->
     <record
         id="postlogistics_output_format_option_eps"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">EPS</field>
         <field name="code">EPS</field>
@@ -49,7 +49,7 @@
     </record>
     <record
         id="postlogistics_output_format_option_gif"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">GIF</field>
         <field name="code">GIF</field>
@@ -58,7 +58,7 @@
     </record>
     <record
         id="postlogistics_output_format_option_jpg"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">JPG</field>
         <field name="code">JPG</field>
@@ -67,7 +67,7 @@
     </record>
     <record
         id="postlogistics_output_format_option_png"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">PNG</field>
         <field name="code">PNG</field>
@@ -76,7 +76,7 @@
     </record>
     <record
         id="postlogistics_output_format_option_pdf"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">PDF</field>
         <field name="code">PDF</field>
@@ -85,7 +85,7 @@
     </record>
     <record
         id="postlogistics_output_format_option_spdf"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">sPDF</field>
         <field name="code">sPDF</field>
@@ -94,7 +94,7 @@
     </record>
     <record
         id="postlogistics_output_format_option_zpl2"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">ZPL2</field>
         <field name="code">ZPL2</field>
@@ -104,7 +104,7 @@
     <!-- resolutions -->
     <record
         id="postlogistics_output_resolution_option_200ppp"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">200 ppp</field>
         <field name="code">200</field>
@@ -113,7 +113,7 @@
     </record>
     <record
         id="postlogistics_output_resolution_option_300ppp"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">300 ppp</field>
         <field name="code">300</field>
@@ -122,7 +122,7 @@
     </record>
     <record
         id="postlogistics_output_resolution_option_600ppp"
-        model="postlogistics.delivery.carrier.template.option"
+        model="delivery.carrier.template.option"
     >
         <field name="name">600 ppp</field>
         <field name="code">600</field>
