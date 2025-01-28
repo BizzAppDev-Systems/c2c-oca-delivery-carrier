@@ -1,11 +1,12 @@
-# Copyright 2013-2016 Camptocamp SA
+# Copyright 2013 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import base64
 from operator import attrgetter
 
 import lxml.html
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 from ..postlogistics.web_service import PostlogisticsWebService
 
@@ -26,11 +27,10 @@ class StockPicking(models.Model):
         "Mobile", help="For notify delivery by telephone (ZAW3213)"
     )
 
-    def _get_packages_from_picking(self):
-        """Get all the packages from the picking"""
+    def _get_quant_packages_from_picking(self):
+        """Get all the quant packages from the picking"""
         self.ensure_one()
-        operation_obj = self.env["stock.move.line"]
-        operations = operation_obj.search(
+        operations = self.env["stock.move.line"].search(
             [
                 "|",
                 ("package_id", "!=", False),
@@ -44,8 +44,7 @@ class StockPicking(models.Model):
             # moved so take the source one.
             package_ids.add(operation.result_package_id.id or operation.package_id.id)
 
-        packages = self.env["stock.quant.package"].browse(package_ids)
-        return packages
+        return self.env["stock.quant.package"].browse(package_ids)
 
     def get_shipping_label_values(self, label):
         # TODO: consider to depends on base_delivery_carrier_label
@@ -70,9 +69,7 @@ class StockPicking(models.Model):
         if "default_type" in context_attachment:
             del context_attachment["default_type"]
         return (
-            self.env["postlogistics.shipping.label"]
-            .with_context(**context_attachment)
-            .create(data)
+            self.env["shipping.label"].with_context(**context_attachment).create(data)
         )
 
     def _set_a_default_package(self):
@@ -111,8 +108,8 @@ class StockPicking(models.Model):
         if not order:
             return 0.0
         if len(order) > 1:
-            raise exceptions.Warning(
-                _(
+            raise UserError(
+                self.env._(
                     "The cash on delivery amount must be manually specified "
                     "on the packages when a package contains products "
                     "from different sales orders."
@@ -120,8 +117,8 @@ class StockPicking(models.Model):
             )
         # check if the package delivers the whole sales order
         if len(order.picking_ids) > 1:
-            raise exceptions.Warning(
-                _(
+            raise UserError(
+                self.env._(
                     "The cash on delivery amount must be manually specified "
                     "on the packages when a sales order is delivered "
                     "in several delivery orders."
@@ -196,7 +193,7 @@ class StockPicking(models.Model):
             webservice_class = PostlogisticsWebService
 
         if package_ids is None:
-            packages = self._get_packages_from_picking()
+            packages = self._get_quant_packages_from_picking()
             packages = packages.sorted(key=attrgetter("name"))
         else:
             # restrict on the provided packages
@@ -235,9 +232,7 @@ class StockPicking(models.Model):
                 self._cleanup_error_message(label["errors"])
                 for label in failed_label_results
             )
-            raise exceptions.UserError(
-                _("PostLogistics error:") + "\n\n" + error_message
-            )
+            raise UserError(self.env._("PostLogistics error:") + "\n\n" + error_message)
         return labels
 
     @api.model
@@ -255,5 +250,5 @@ class StockPicking(models.Model):
     def action_generate_carrier_label(self):
         self.ensure_one()
         if not self.carrier_id:
-            raise exceptions.UserError(_("Please, set a carrier."))
+            raise UserError(self.env._("Please, set a carrier."))
         self.env["delivery.carrier"].postlogistics_send_shipping(self)

@@ -49,7 +49,7 @@ class TestSanitizeValues(TestPostlogisticsCommon):
         self.check_strings_in_dict(customer)
         recipient = self.service_class._prepare_recipient(self.picking)
         self.check_strings_in_dict(recipient)
-        packages = self.picking._get_packages_from_picking()
+        packages = self.picking._get_quant_packages_from_picking()
         item_list = self.service_class._prepare_item_list(
             self.picking, recipient, packages
         )
