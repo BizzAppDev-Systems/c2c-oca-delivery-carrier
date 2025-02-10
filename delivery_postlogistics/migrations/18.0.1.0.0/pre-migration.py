@@ -11,6 +11,9 @@ _logger = logging.getLogger(__name__)
 MODEL_TO_RENAMED_FIELDS = {
     "res.partner": [
         ("postlogistics_option_ids", "delivery_carrier_template_option_ids"),
+    ],
+    "delivery.carrier.template.option": [
+        ("postlogistics_type", "type"),
     ]
 }
 
@@ -52,6 +55,6 @@ def _rename_fields(env):
 
 
 def migrate(env, version):
-    _migrate_models(env)
     _rename_models(env)
+    _migrate_models(env)
     _rename_fields(env)

@@ -37,7 +37,7 @@ msgid "Access Token"
 msgstr "Ficha de acceso"
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__postlogistics_type__additional
+#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__type__additional
 msgid "Additional Service"
 msgstr "Servicio adicional"
 
@@ -107,7 +107,7 @@ msgstr ""
 "PostLogistics"
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__postlogistics_type__basic
+#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__type__basic
 msgid "Basic Service"
 msgstr "Servicio básico"
 
@@ -190,7 +190,7 @@ msgid "Database Data"
 msgstr "Fecha de la base de datos"
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__postlogistics_type__delivery
+#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__type__delivery
 msgid "Delivery Instructions"
 msgstr "Instrucciones de entrega"
 
@@ -383,7 +383,7 @@ msgid "JPG"
 msgstr "JPG"
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__postlogistics_type__label_layout
+#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__type__label_layout
 msgid "Label Layout"
 msgstr "Diseño de etiqueta"
 
@@ -516,12 +516,12 @@ msgid "Original (unoptimized, unresized) attachment"
 msgstr "Archivo adjunto original (sin optimizar y sin redimensionar)"
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__postlogistics_type__output_format
+#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__type__output_format
 msgid "Output Format"
 msgstr "Formato de Salida"
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__postlogistics_type__resolution
+#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__type__resolution
 msgid "Output Resolution"
 msgstr "Resolución de salida"
 
@@ -563,7 +563,7 @@ msgid "Parcel Tracking"
 msgstr "Seguimiento del envío"
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__postlogistics_type__partner_option
+#: model:ir.model.fields.selection,name:delivery_postlogistics.selection__postlogistics_delivery_carrier_template_option__type__partner_option
 msgid "Partner Option"
 msgstr "Opción de Socio"
 
@@ -674,7 +674,7 @@ msgid "PostLogistics error:"
 msgstr ""
 
 #. module: delivery_postlogistics
-#: model:ir.model.fields,field_description:delivery_postlogistics.field_postlogistics_delivery_carrier_template_option__postlogistics_type
+#: model:ir.model.fields,field_description:delivery_postlogistics.field_postlogistics_delivery_carrier_template_option__type
 msgid "PostLogistics option type"
 msgstr "Tipo de Opción Postlogística"
 

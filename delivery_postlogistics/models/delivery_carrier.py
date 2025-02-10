@@ -51,17 +51,17 @@ class DeliveryCarrier(models.Model):
     postlogistics_label_layout = fields.Many2one(
         comodel_name="delivery.carrier.template.option",
         string="Label layout",
-        domain=[("postlogistics_type", "=", "label_layout")],
+        domain=[("type", "=", "label_layout")],
     )
     postlogistics_output_format = fields.Many2one(
         comodel_name="delivery.carrier.template.option",
         string="Output format",
-        domain=[("postlogistics_type", "=", "output_format")],
+        domain=[("type", "=", "output_format")],
     )
     postlogistics_resolution = fields.Many2one(
         comodel_name="delivery.carrier.template.option",
         string="Resolution",
-        domain=[("postlogistics_type", "=", "resolution")],
+        domain=[("type", "=", "resolution")],
     )
     postlogistics_tracking_format = fields.Selection(
         [

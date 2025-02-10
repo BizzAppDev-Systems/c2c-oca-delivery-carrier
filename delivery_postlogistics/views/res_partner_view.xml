@@ -9,8 +9,8 @@
                 <field
                     name="delivery_carrier_template_option_ids"
                     widget="many2many_tags"
-                    domain="[('postlogistics_type', '=', 'partner_option')]"
-                    context="{'default_postlogistics_type': 'partner_option'}"
+                    domain="[('type', '=', 'partner_option')]"
+                    context="{'default_type': 'partner_option'}"
                 />
             </field>
         </field>

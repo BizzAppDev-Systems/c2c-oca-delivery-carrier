@@ -10,7 +10,8 @@
     "category": "Delivery",
     "complexity": "normal",
     "depends": [
-        "stock_delivery" "delivery_carrier_option",
+        "stock_delivery",
+        "delivery_carrier_option",
         "delivery_carrier_shipping_label",
     ],
     "website": "https://github.com/OCA/delivery-carrier",
