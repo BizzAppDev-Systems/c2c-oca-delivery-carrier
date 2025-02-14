@@ -260,7 +260,8 @@ class DeliveryCarrierLabelGenerate(models.TransientModel):
                     # We do not want to merge zpl2
                     # because too big file can failed on zebra printers
                     for label in labels:
-                        filename = f"{label["name"]}.{f_type}"
+                        f_name = label["name"]
+                        filename = f"{f_name}.{f_type}"
                         data = {
                             "name": filename,
                             "res_id": batch.id,
