@@ -66,6 +66,7 @@ Contributors
 -  Sébastien Alix <sebastien.alix@camptocamp.com>
 -  Sergio Teruel <sergio.teruel@tecnativa.com>
 -  Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
+-  Italo Lopes <italo.lopes@camptocamp.com>
 
 Other credits
 -------------
