@@ -1,0 +1,2 @@
+vcrpy
+odoo-addon-delivery_carrier_package_info @ git+https://github.com/OCA/delivery-carrier.git@refs/pull/983/head#subdirectory=delivery_carrier_package_info
