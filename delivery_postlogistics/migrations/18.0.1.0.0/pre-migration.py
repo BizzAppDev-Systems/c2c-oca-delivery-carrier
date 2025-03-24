@@ -5,6 +5,8 @@ import logging
 
 from openupgradelib import openupgrade
 
+from odoo import SUPERUSER_ID, api
+
 _logger = logging.getLogger(__name__)
 
 
@@ -18,27 +20,28 @@ MODEL_TO_RENAMED_FIELDS = {
 }
 
 
-def _migrate_models(env):
+def _migrate_models(cr):
     xmlids_spec = [
         (
             "delivery_postlogistics.postlogistics_delivery_carrier_template_option",
             "delivery_carrier_option.delivery_carrier_template_option",
         )
     ]
-    openupgrade.rename_xmlids(env.cr, xmlids_spec)
+    openupgrade.rename_xmlids(cr, xmlids_spec)
 
 
-def _rename_models(env):
+def _rename_models(cr):
     models_spec = [
         (
             "postlogistics.delivery.carrier.template.option",
             "delivery.carrier.template.option",
         )
     ]
-    openupgrade.rename_models(env.cr, models_spec)
+    openupgrade.rename_models(cr, models_spec)
 
 
-def _rename_fields(env):
+def _rename_fields(cr):
+    env = api.Environment(cr, SUPERUSER_ID, {})
     openupgrade.rename_fields(
         env,
         [
@@ -54,7 +57,7 @@ def _rename_fields(env):
     )
 
 
-def migrate(env, version):
-    _rename_models(env)
-    _migrate_models(env)
-    _rename_fields(env)
+def migrate(cr, version):
+    _rename_models(cr)
+    _migrate_models(cr)
+    _rename_fields(cr)
