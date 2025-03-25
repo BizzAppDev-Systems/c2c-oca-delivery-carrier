@@ -1,2 +1,5 @@
+<<<<<<< HEAD
 odoo_test_helper
 vcrpy
+odoo-addon-delivery_postlogistics @ git+https://github.com/OCA/delivery-carrier.git@refs/pull/974/head#subdirectory=delivery_postlogistics
+odoo-addon-delivery_carrier_package_info @ git+https://github.com/OCA/delivery-carrier.git@refs/pull/983/head#subdirectory=delivery_carrier_package_info
