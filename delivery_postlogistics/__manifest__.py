@@ -35,6 +35,7 @@
     "external_dependencies": {
         "python": [
             "openupgradelib",
+            "vcrpy",
         ],
     },
 }
